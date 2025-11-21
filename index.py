@@ -1,15 +1,15 @@
 import fastapi
-import os
-import dotenv
+# import os
+# import dotenv
 from classes.wazzup import Wazzup
 
-dotenv.load_dotenv()
+# dotenv.load_dotenv()
 
 app = fastapi.FastAPI()
 
 # Инициализируем Wazzup только если переменные окружения существуют
-wazzup_api_key = os.getenv("WAZZUP_API_KEY")
-wazzup_api_url = os.getenv("WAZZUP_API_URL")
+wazzup_api_key = "64a39a928304492f89df4f7f8b16f692" # os.getenv("WAZZUP_API_KEY")
+wazzup_api_url = "https://api.wazzup24.com/v3" # os.getenv("WAZZUP_API_URL")
 
 if wazzup_api_key and wazzup_api_url:
     wazzup = Wazzup(wazzup_api_key, wazzup_api_url)
