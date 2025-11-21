@@ -41,16 +41,16 @@ def response_sub(data=fastapi.Body()):
     return fastapi.responses.PlainTextResponse(content="Подключение webhook")
 
 
-if __name__ == "__main__":
-    config = uvicorn.Config(
-        "index:app",
-        host=os.getenv("HOST"),
-        port=int(os.getenv("PORT")),
-        log_level="info",
-        reload=True,
-    )
-    server = uvicorn.Server(config)
-    server.run()
+# if __name__ == "__main__":
+    # config = uvicorn.Config(
+    #     "index:app",
+    #     host=os.getenv("HOST"),
+    #     port=int(os.getenv("PORT")),
+    #     log_level="info",
+    #     reload=True,
+    # )
+    # server = uvicorn.Server(config)
+    # server.run()
     # connect_db = postgres.connect()
     # if connect_db is None:
     #     print("Не удалось подключиться к базе данных PostgreSQL. Сервер не запущен")
