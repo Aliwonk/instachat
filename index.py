@@ -48,8 +48,8 @@ def response_sub(data=fastapi.Body()):
     return fastapi.responses.PlainTextResponse(content="Подключение webhook")
 
 
-if __name__ == "__main__":
-    print("Приложение запущено")
+# if __name__ == "__main__":
+#     print("Приложение запущено")
 # config = uvicorn.Config(
 #     "index:app",
 #     host=os.getenv("HOST"),
