@@ -1,10 +1,12 @@
 import fastapi
+
 # import uvicorn
 # import threading
 # import os
 # from dotenv import load_dotenv
 # from classes.postgres import Postgres
 from classes.wazzup import Wazzup
+
 # from classes.bot import TelegramBOT
 
 # load_dotenv()
@@ -25,6 +27,11 @@ wazzup = Wazzup("64a39a928304492f89df4f7f8b16f692", "https://api.wazzup24.com/v3
 # )
 
 
+@app.get("/", status_code=200)
+def main():
+    return fastapi.responses.PlainTextResponse(content="Сервер работает")
+
+
 @app.post("/sub", status_code=200)
 def response_sub(data=fastapi.Body()):
     options = {}
@@ -41,7 +48,8 @@ def response_sub(data=fastapi.Body()):
     return fastapi.responses.PlainTextResponse(content="Подключение webhook")
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
+    print("Приложение запущено")
 # config = uvicorn.Config(
 #     "index:app",
 #     host=os.getenv("HOST"),
