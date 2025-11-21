@@ -1,6 +1,5 @@
 import requests
 
-
 class Wazzup:
     def __init__(self, api_key, url):
         self.URL = url
