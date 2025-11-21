@@ -5,6 +5,7 @@ class Wazzup:
         self.URL = url
         self.API_KEY = api_key
         print("Создан экземепляр класса для работы с Wazzup API")
+        pass
 
     # METHODS
 

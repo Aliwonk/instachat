@@ -1,29 +1,21 @@
 import fastapi
-# import uvicorn
-# import threading
 import os
 import dotenv
-# from classes.postgres import Postgres
 from classes.wazzup import Wazzup
-
-# from classes.bot import TelegramBOT
 
 dotenv.load_dotenv()
 
 app = fastapi.FastAPI()
-wazzup = Wazzup(os.getenv("WAZZUP_API_KEY"), os.getenv("WAZZUP_API_URL"))
-# postgres = Postgres(
-#     {
-#         "dbname": os.getenv("POSTGRES_DB_NAME"),
-#         "user": os.getenv("POSTGRES_DB_USER"),
-#         "password": os.getenv("POSTGRES_DB_PASSWORD"),
-#         "host": os.getenv("POSTGRES_DB_HOST"),
-#         "port": os.getenv("POSTGRES_DB_PORT"),
-#     }
-# )
-# telegram_bot = TelegramBOT(
-#     os.getenv("TELEGRAM_BOT_TOKEN"), os.getenv("TELEGRAM_BOT_URL")
-# )
+
+# Инициализируем Wazzup только если переменные окружения существуют
+wazzup_api_key = os.getenv("WAZZUP_API_KEY")
+wazzup_api_url = os.getenv("WAZZUP_API_URL")
+
+if wazzup_api_key and wazzup_api_url:
+    wazzup = Wazzup(wazzup_api_key, wazzup_api_url)
+else:
+    wazzup = None
+    print("Предупреждение: WAZZUP_API_KEY или WAZZUP_API_URL не установлены")
 
 
 @app.get("/", status_code=200)
@@ -32,7 +24,12 @@ def main():
 
 
 @app.post("/sub", status_code=200)
-def response_sub(data=fastapi.Body()):
+def response_sub(data: dict = fastapi.Body()):
+    if wazzup is None:
+        return fastapi.responses.PlainTextResponse(
+            content="Wazzup не настроен", status_code=500
+        )
+
     options = {}
     message = data["messages"][0]
     if message.get("isEcho") == False:
@@ -43,27 +40,6 @@ def response_sub(data=fastapi.Body()):
             "Здравствуйте! Наши консультанты будут рады ответить на все ваши вопросы в Телеграм чате! https://t.me/+ETTFVnzsHMY2NTBi"
         )
         wazzup.send_message(options)
+
     print(f"Уведомление: {data}")
     return fastapi.responses.PlainTextResponse(content="Подключение webhook")
-
-
-# if __name__ == "__main__":
-#     print("Приложение запущено")
-# config = uvicorn.Config(
-#     "index:app",
-#     host=os.getenv("HOST"),
-#     port=int(os.getenv("PORT")),
-#     log_level="info",
-#     reload=True,
-# )
-# server = uvicorn.Server(config)
-# server.run()
-# connect_db = postgres.connect()
-# if connect_db is None:
-#     print("Не удалось подключиться к базе данных PostgreSQL. Сервер не запущен")
-# else:
-# telegram_bot.run()
-# Запуск Telegram бота в отдельном потоке
-# threading.Thread(target=telegram_bot.run, daemon=True).start()
-
-# # Запусе веб-серверая
