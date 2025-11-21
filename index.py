@@ -42,21 +42,21 @@ def response_sub(data=fastapi.Body()):
 
 
 if __name__ == "__main__":
-    connect_db = postgres.connect()
-    if connect_db is None:
-        print("Не удалось подключиться к базе данных PostgreSQL. Сервер не запущен")
-    else:
-        # telegram_bot.run()
-        # Запуск Telegram бота в отдельном потоке
-        # threading.Thread(target=telegram_bot.run, daemon=True).start()
+    config = uvicorn.Config(
+        "index:app",
+        host=os.getenv("HOST"),
+        port=int(os.getenv("PORT")),
+        log_level="info",
+        reload=True,
+    )
+    server = uvicorn.Server(config)
+    server.run()
+    # connect_db = postgres.connect()
+    # if connect_db is None:
+    #     print("Не удалось подключиться к базе данных PostgreSQL. Сервер не запущен")
+    # else:
+    # telegram_bot.run()
+    # Запуск Telegram бота в отдельном потоке
+    # threading.Thread(target=telegram_bot.run, daemon=True).start()
 
-        # # Запусе веб-серверая
-        config = uvicorn.Config(
-            "index:app",
-            host=os.getenv("HOST"),
-            port=int(os.getenv("PORT")),
-            log_level="info",
-            reload=True,
-        )
-        server = uvicorn.Server(config)
-        server.run()
+    # # Запусе веб-серверая
