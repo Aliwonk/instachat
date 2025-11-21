@@ -1,13 +1,13 @@
 import fastapi
-import uvicorn
-import threading
-import os
-from dotenv import load_dotenv
-from classes.postgres import Postgres
+# import uvicorn
+# import threading
+# import os
+# from dotenv import load_dotenv
+# from classes.postgres import Postgres
 from classes.wazzup import Wazzup
-from classes.bot import TelegramBOT
+# from classes.bot import TelegramBOT
 
-load_dotenv()
+# load_dotenv()
 
 app = fastapi.FastAPI()
 wazzup = Wazzup("64a39a928304492f89df4f7f8b16f692", "https://api.wazzup24.com/v3")
